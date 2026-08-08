@@ -1,4 +1,5 @@
 import { CONTACT, RESUME_URL } from '../data/content'
+import { MailIcon, LinkedInIcon, FileIcon } from './icons'
 
 export default function Footer() {
   return (
@@ -11,27 +12,27 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} Shivam Nagi
         </p>
 
-        <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-text-muted">
+        <div className="flex flex-wrap gap-x-6 gap-y-3 font-mono text-xs text-text-muted">
           <a
             href={`mailto:${CONTACT.email}`}
-            className="transition-colors hover:text-accent"
+            className="flex items-center gap-1.5 transition-colors hover:text-accent"
           >
-            {CONTACT.email}
+            <MailIcon /> {CONTACT.email}
           </a>
           <a
             href={CONTACT.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="transition-colors hover:text-accent"
+            className="flex items-center gap-1.5 transition-colors hover:text-accent"
           >
-            {CONTACT.linkedinLabel}
+            <LinkedInIcon /> {CONTACT.linkedinLabel}
           </a>
           <a
             href={RESUME_URL}
             download
-            className="transition-colors hover:text-accent"
+            className="flex items-center gap-1.5 transition-colors hover:text-accent"
           >
-            Resume (PDF)
+            <FileIcon /> Resume (PDF)
           </a>
         </div>
       </div>

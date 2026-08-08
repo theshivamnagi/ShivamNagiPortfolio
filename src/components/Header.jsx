@@ -1,4 +1,5 @@
 import ThemeToggle from './ThemeToggle'
+import { LogoMark } from './icons'
 
 export default function Header() {
   return (
@@ -6,9 +7,10 @@ export default function Header() {
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4 sm:px-8">
         <a
           href="#hero"
-          className="font-mono text-xs uppercase tracking-widest text-text-muted transition-colors hover:text-accent"
+          aria-label="Shivam Nagi — home"
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:border-accent hover:text-accent"
         >
-          Shivam Nagi — Spec v1.0
+          <LogoMark />
         </a>
         <ThemeToggle />
       </div>

@@ -2,7 +2,10 @@
 export const BOOKING_URL = 'https://calendar.google.com/calendar/appointments/PLACEHOLDER'
 
 // EDIT ME: drop your resume PDF in /public and update this path
-export const RESUME_URL = '/resume.pdf'
+export const RESUME_URL = `${import.meta.env.BASE_URL}resume.pdf`
+
+// EDIT ME: drop your hero photo in /public and update this path
+export const PHOTO_URL = `${import.meta.env.BASE_URL}profile.png`
 
 export const CONTACT = {
   email: 'theshivamnagi@gmail.com',
