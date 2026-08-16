@@ -2,13 +2,25 @@
 export const BOOKING_URL = 'https://calendar.google.com/calendar/appointments/PLACEHOLDER'
 
 // EDIT ME: drop your resume PDF in /public and update this path
-export const RESUME_URL = '/resume.pdf'
+export const RESUME_URL = `${import.meta.env.BASE_URL}resume.pdf`
+
+// EDIT ME: drop your hero photo in /public and update this path
+export const PHOTO_URL = `${import.meta.env.BASE_URL}profile.png`
 
 export const CONTACT = {
   email: 'theshivamnagi@gmail.com',
   linkedin: 'https://linkedin.com/in/nagishivam',
   linkedinLabel: 'linkedin.com/in/nagishivam',
 }
+
+// Rotating skill labels shown in the hero
+export const SKILL_LABELS = [
+  'Product Management',
+  'UX Design',
+  'Design Thinking',
+  'Creator Platforms',
+  'Product Ops',
+]
 
 export const METRICS = [
   { label: 'Brands', value: 264, suffix: '+' },
@@ -19,25 +31,19 @@ export const METRICS = [
 
 export const EXPERIENCE = [
   {
-    range: 'Apr 2026 — Present',
+    range: 'May 2025 - Present',
     role: 'Associate Product Manager',
     org: 'Katha Ads',
     status: 'CURRENT',
   },
   {
-    range: 'May 2025 — May 2026',
-    role: 'UX Designer',
-    org: 'Katha Ads',
-    status: 'COMPLETED',
-  },
-  {
-    range: 'May 2024 — Aug 2024',
+    range: 'May 2024 - Aug 2024',
     role: 'Product Operations Intern',
     org: 'Pixelo Digital',
     status: 'COMPLETED',
   },
   {
-    range: 'Jan 2024 — Apr 2024',
+    range: 'Jan 2024 - Apr 2024',
     role: 'NetSuite Software Developer Intern',
     org: 'GIR Software Services',
     status: 'COMPLETED',
@@ -53,40 +59,57 @@ export const EXPERIENCE = [
 export const CASE_STUDIES = [
   {
     tag: 'CASE STUDY',
+    kind: 'Web App',
     title: 'Creator Discovery Feature',
+    // EDIT ME: drop a screenshot in /public/work and set e.g. `${import.meta.env.BASE_URL}work/discovery.png`
+    image: null,
     problem: 'Brands struggled to find relevant creators, driving drop-off before campaign creation.',
     outcome: '27% lift in search-to-campaign conversion',
     problemDetail:
-      'Placeholder — describe the core problem, who experienced it, and why it mattered to the business.',
-    role: 'Placeholder — describe your specific responsibilities and scope on this project.',
-    process: 'Placeholder — outline research, design iterations, and key decisions made along the way.',
+      'Placeholder - describe the core problem, who experienced it, and why it mattered to the business.',
+    role: 'Placeholder - describe your specific responsibilities and scope on this project.',
+    process: 'Placeholder - outline research, design iterations, and key decisions made along the way.',
     outcomeDetail:
-      'Placeholder — describe the measurable outcome and business impact in more detail.',
+      'Placeholder - describe the measurable outcome and business impact in more detail.',
   },
   {
     tag: 'SHIPPED',
+    kind: 'Mobile App',
     title: 'Creator App Redesign',
+    image: null,
     problem: 'Legacy creator app had inconsistent flows that slowed onboarding and daily usage.',
     outcome: '8,500+ active users onboarded to the redesigned app',
     problemDetail:
-      'Placeholder — describe the core problem, who experienced it, and why it mattered to the business.',
-    role: 'Placeholder — describe your specific responsibilities and scope on this project.',
-    process: 'Placeholder — outline research, design iterations, and key decisions made along the way.',
+      'Placeholder - describe the core problem, who experienced it, and why it mattered to the business.',
+    role: 'Placeholder - describe your specific responsibilities and scope on this project.',
+    process: 'Placeholder - outline research, design iterations, and key decisions made along the way.',
     outcomeDetail:
-      'Placeholder — describe the measurable outcome and business impact in more detail.',
+      'Placeholder - describe the measurable outcome and business impact in more detail.',
   },
   {
     tag: 'SHIPPED',
+    kind: 'Internal Tools',
     title: 'Internal Tools & Creator Ops',
+    image: null,
     problem: 'Manual ops workflows across teams created bottlenecks in creator management at scale.',
     outcome: 'Supported ops across 264+ brand partnerships',
     problemDetail:
-      'Placeholder — describe the core problem, who experienced it, and why it mattered to the business.',
-    role: 'Placeholder — describe your specific responsibilities and scope on this project.',
-    process: 'Placeholder — outline research, design iterations, and key decisions made along the way.',
+      'Placeholder - describe the core problem, who experienced it, and why it mattered to the business.',
+    role: 'Placeholder - describe your specific responsibilities and scope on this project.',
+    process: 'Placeholder - outline research, design iterations, and key decisions made along the way.',
     outcomeDetail:
-      'Placeholder — describe the measurable outcome and business impact in more detail.',
+      'Placeholder - describe the measurable outcome and business impact in more detail.',
   },
+]
+
+// Horizontal-scroll "Playground" - experiments & side projects.
+// EDIT ME: swap `image` with a path like `${import.meta.env.BASE_URL}play/thing.png`
+export const PLAYGROUND = [
+  { title: 'Design System Tokens', tag: 'Experiment', image: null },
+  { title: 'Creator Analytics Concept', tag: 'Concept', image: null },
+  { title: 'Onboarding Micro-flows', tag: 'Prototype', image: null },
+  { title: 'AI Brief Generator', tag: 'Vibe Code', image: null },
+  { title: 'Campaign Dashboard', tag: 'Concept', image: null },
 ]
 
 export const SKILLS = {

@@ -1,74 +1,118 @@
-import { motion } from 'framer-motion'
-import { RESUME_URL } from '../data/content'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { PHOTO_URL, RESUME_URL } from '../data/content'
+import { ArrowDownIcon } from './icons'
 
-const lineVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0 },
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
 }
 
+const item = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+}
+
+const TITLES = [
+  'Product Management',
+  'Product Operations',
+  'Project Management',
+  'UX Design',
+]
+
+const TITLE_INTERVAL_MS = 1800
+
 export default function Hero() {
+  const [activeTitleIndex, setActiveTitleIndex] = useState(0)
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setActiveTitleIndex((current) => (current + 1) % TITLES.length)
+    }, TITLE_INTERVAL_MS)
+
+    return () => window.clearInterval(intervalId)
+  }, [])
+
   return (
     <section
       id="hero"
-      className="mx-auto flex min-h-[90svh] w-full max-w-5xl flex-col justify-center px-6 py-24 sm:px-8"
+      className="mx-auto flex min-h-[100svh] w-full max-w-4xl flex-col items-center justify-center px-6 py-28 text-center sm:px-8"
     >
-      <motion.p
-        initial="hidden"
-        animate="visible"
-        variants={lineVariants}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="mb-4 font-mono text-xs uppercase tracking-widest text-text-muted"
-      >
-        [ Doc type: Product Manager + UX Designer ]
-      </motion.p>
+      <motion.div variants={container} initial="hidden" animate="visible">
+        <motion.div variants={item} className="flex justify-center">
+          <div className="h-24 w-24 overflow-hidden rounded-full border border-border sm:h-28 sm:w-28">
+            <img
+              src={PHOTO_URL}
+              alt="Shivam Nagi"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </motion.div>
 
-      <motion.h1
-        initial="hidden"
-        animate="visible"
-        variants={lineVariants}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.15 }}
-        className="font-display text-5xl font-semibold tracking-tight text-text-primary sm:text-6xl md:text-7xl"
-      >
-        Shivam Nagi
-      </motion.h1>
+        <motion.h1
+          variants={item}
+          className="mt-8 font-display text-6xl font-bold leading-[0.95] tracking-tight text-text-primary sm:text-7xl md:text-8xl"
+        >
+          Shivam Nagi
+        </motion.h1>
 
-      <motion.p
-        initial="hidden"
-        animate="visible"
-        variants={lineVariants}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
-        className="mt-6 max-w-xl text-lg text-text-muted"
-      >
-        I build creator-marketplace products end to end — from research and
-        interaction design to shipped, measurable outcomes.
-      </motion.p>
+        <motion.div
+          variants={item}
+          className="mt-6 flex justify-center px-4"
+          aria-live="polite"
+        >
+          <div className="flex items-center justify-center gap-4 font-mono text-xs uppercase tracking-[0.26em] sm:gap-6 sm:text-sm">
+            <span aria-hidden="true" className="shrink-0 text-accent">
+              ✳
+            </span>
 
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={lineVariants}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: 0.45 }}
-        className="mt-10 flex flex-wrap items-center gap-4"
-      >
-        <a
-          href="#work"
-          className="rounded-md border border-border px-5 py-2.5 font-mono text-sm text-text-primary transition-colors hover:border-accent hover:text-accent"
+            <div className="relative min-w-[14ch] overflow-hidden text-center text-text-primary">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={TITLES[activeTitleIndex]}
+                  initial={{ opacity: 0, y: 14, filter: 'blur(2px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -14, filter: 'blur(2px)' }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  className="block whitespace-nowrap"
+                >
+                  {TITLES[activeTitleIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+
+            <span aria-hidden="true" className="shrink-0 text-accent">
+              ✳
+            </span>
+          </div>
+        </motion.div>
+
+        <motion.p
+          variants={item}
+          className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-text-muted"
         >
-          View Work
-        </a>
-        <a
-          href={RESUME_URL}
-          download
-          className="rounded-md border border-border px-5 py-2.5 font-mono text-sm text-text-primary transition-colors hover:border-accent hover:text-accent"
+          Bridging product strategy, project execution, and operations to turn
+          ideas into meaningful outcomes.
+        </motion.p>
+
+        <motion.div
+          variants={item}
+          className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
-          Download Resume
-        </a>
-        <a
-          href="#contact"
-          className="rounded-md bg-accent px-5 py-2.5 font-mono text-sm text-white transition-opacity hover:opacity-90"
-        >
-          Book a Meet
-        </a>
+          <a
+            href="#work"
+            className="rounded-full border border-border px-6 py-3 text-sm font-medium text-text-primary transition-colors hover:border-accent hover:text-accent"
+          >
+            View Work
+          </a>
+          <a
+            href={RESUME_URL}
+            download
+            className="flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          >
+            <ArrowDownIcon /> Download Resume
+          </a>
+        </motion.div>
       </motion.div>
     </section>
   )
