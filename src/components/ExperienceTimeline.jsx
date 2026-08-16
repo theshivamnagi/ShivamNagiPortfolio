@@ -57,9 +57,12 @@ export default function ExperienceTimeline() {
       id="experience"
       className="mx-auto w-full max-w-5xl px-6 py-24 sm:px-8"
     >
-      <p className="mb-14 font-mono text-xs uppercase tracking-widest text-text-muted">
-        [ 02 / Experience ]
+      <p className="mb-3 font-mono text-xs uppercase tracking-widest text-text-muted">
+        [ 04 ] Experience
       </p>
+      <h2 className="mb-14 font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
+        Where I've worked
+      </h2>
 
       <div ref={containerRef} className="relative">
         <div className="absolute left-4 top-2 bottom-2 w-px bg-border sm:left-6" />

@@ -1,92 +1,142 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { CASE_STUDIES } from '../data/content'
+import ProjectImage from './ProjectImage'
+import { ArrowUpRightIcon } from './icons'
 
-function CaseStudyCard({ study, index }) {
-  const [expanded, setExpanded] = useState(false)
-
+function ScrollButton({ dir, onClick }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.45, delay: index * 0.08, ease: 'easeOut' }}
-      whileHover={{ y: -4 }}
-      className="group rounded-md border border-border bg-surface p-6 transition-colors hover:border-accent"
-      style={{ boxShadow: expanded ? '6px 6px 0 0 var(--color-border)' : 'none' }}
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={dir === 'left' ? 'Scroll left' : 'Scroll right'}
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:border-accent hover:text-accent"
     >
-      <span className="inline-block rounded-sm border border-border px-2 py-0.5 font-mono text-[11px] tracking-wide text-text-muted">
-        [{study.tag}]
-      </span>
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+        style={{ transform: dir === 'left' ? 'rotate(180deg)' : 'none' }}
+      >
+        <path d="M5 12h14" />
+        <path d="m12 5 7 7-7 7" />
+      </svg>
+    </button>
+  )
+}
 
-      <h3 className="mt-4 font-display text-xl font-medium text-text-primary">
-        {study.title}
-      </h3>
-
-      <p className="mt-2 text-sm text-text-muted">{study.problem}</p>
-
-      <p className="mt-4 text-sm text-text-primary">
-        <span className="font-semibold">{study.outcome}</span>
+function DetailRow({ label, text }) {
+  return (
+    <div>
+      <p className="font-mono text-[11px] uppercase tracking-widest text-text-muted">
+        {label}
       </p>
-
-      <button
-        type="button"
-        onClick={() => setExpanded((e) => !e)}
-        aria-expanded={expanded}
-        className="mt-5 font-mono text-xs uppercase tracking-wide text-text-muted underline decoration-dotted underline-offset-4 transition-colors hover:text-accent"
-      >
-        {expanded ? '[ Collapse ]' : '[ Expand ]'}
-      </button>
-
-      <motion.div
-        initial={false}
-        animate={{ height: expanded ? 'auto' : 0, opacity: expanded ? 1 : 0 }}
-        transition={{ duration: 0.35, ease: 'easeInOut' }}
-        className="overflow-hidden"
-      >
-        <div className="mt-6 space-y-4 border-t border-border pt-6">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-wide text-text-muted">
-              Problem
-            </p>
-            <p className="mt-1 text-sm text-text-primary">{study.problemDetail}</p>
-          </div>
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-wide text-text-muted">
-              Role
-            </p>
-            <p className="mt-1 text-sm text-text-primary">{study.role}</p>
-          </div>
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-wide text-text-muted">
-              Process
-            </p>
-            <p className="mt-1 text-sm text-text-primary">{study.process}</p>
-          </div>
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-wide text-text-muted">
-              Outcome
-            </p>
-            <p className="mt-1 text-sm text-text-primary">{study.outcomeDetail}</p>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
+      <p className="mt-1 text-sm leading-relaxed text-text-primary">{text}</p>
+    </div>
   )
 }
 
 export default function FeaturedWork() {
-  return (
-    <section id="work" className="mx-auto w-full max-w-5xl px-6 py-24 sm:px-8">
-      <p className="mb-14 font-mono text-xs uppercase tracking-widest text-text-muted">
-        [ 03 / Featured Work ]
-      </p>
+  const trackRef = useRef(null)
+  const [selected, setSelected] = useState(null)
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+  const scrollBy = (amount) => {
+    trackRef.current?.scrollBy({ left: amount, behavior: 'smooth' })
+  }
+
+  const active = selected === null ? null : CASE_STUDIES[selected]
+
+  return (
+    <section id="work" className="w-full py-24">
+      <div className="mx-auto mb-10 flex w-full max-w-6xl items-end justify-between px-6 sm:px-8">
+        <div>
+          <p className="mb-3 font-mono text-xs uppercase tracking-widest text-text-muted">
+            [ 01 ] Featured Work
+          </p>
+          <h2 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
+            Selected projects
+          </h2>
+        </div>
+        <div className="hidden gap-3 sm:flex">
+          <ScrollButton dir="left" onClick={() => scrollBy(-420)} />
+          <ScrollButton dir="right" onClick={() => scrollBy(420)} />
+        </div>
+      </div>
+
+      <div
+        ref={trackRef}
+        className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-pl-6 px-6 pb-4 sm:scroll-pl-8 sm:px-8"
+      >
         {CASE_STUDIES.map((study, index) => (
-          <CaseStudyCard key={study.title} study={study} index={index} />
+          <motion.button
+            key={study.title}
+            type="button"
+            onClick={() => setSelected(selected === index ? null : index)}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.45, delay: index * 0.08 }}
+            className="group w-[85vw] shrink-0 snap-start text-left sm:w-[440px]"
+            aria-expanded={selected === index}
+          >
+            <div className="aspect-[16/10] overflow-hidden rounded-xl border border-border transition-colors group-hover:border-accent">
+              <div className="h-full w-full transition-transform duration-500 group-hover:scale-[1.03]">
+                <ProjectImage
+                  src={study.image}
+                  label={study.title}
+                  kind={study.kind}
+                />
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-start justify-between gap-4">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-widest text-text-muted">
+                  {study.kind} · [{study.tag}]
+                </p>
+                <h3 className="mt-1.5 font-display text-2xl font-semibold text-text-primary">
+                  {study.title}
+                </h3>
+                <p className="mt-1 text-sm text-text-muted">{study.problem}</p>
+                <p className="mt-3 text-sm font-semibold text-text-primary">
+                  {study.outcome}
+                </p>
+              </div>
+              <span className="mt-1 shrink-0 text-text-muted transition-colors group-hover:text-accent">
+                <ArrowUpRightIcon />
+              </span>
+            </div>
+          </motion.button>
         ))}
       </div>
+
+      <AnimatePresence initial={false}>
+        {active && (
+          <motion.div
+            key={selected}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="mx-auto mt-6 w-full max-w-6xl px-6 sm:px-8">
+              <div className="grid grid-cols-1 gap-6 rounded-xl border border-border bg-surface p-6 sm:grid-cols-2 sm:p-8">
+                <DetailRow label="Problem" text={active.problemDetail} />
+                <DetailRow label="Role" text={active.role} />
+                <DetailRow label="Process" text={active.process} />
+                <DetailRow label="Outcome" text={active.outcomeDetail} />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
