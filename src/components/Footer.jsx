@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { CONTACT, RESUME_URL } from '../data/content'
-import { LinkedInIcon, MailIcon, ArrowUpRightIcon } from './icons'
+import { MailIcon, ArrowUpRightIcon } from './icons'
 
 export default function Footer() {
   const [copied, setCopied] = useState(false)

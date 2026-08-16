@@ -4,8 +4,8 @@ export const BOOKING_URL = 'https://calendar.google.com/calendar/appointments/PL
 // EDIT ME: drop your resume PDF in /public and update this path
 export const RESUME_URL = `${import.meta.env.BASE_URL}resume.pdf`
 
-// EDIT ME: drop your hero photo in /public and update this path
-export const PHOTO_URL = `${import.meta.env.BASE_URL}profile.png`
+// Hero and avatar photo used across the site
+export const PHOTO_URL = `${import.meta.env.BASE_URL}1734945084082.png`
 
 export const CONTACT = {
   email: 'theshivamnagi@gmail.com',
