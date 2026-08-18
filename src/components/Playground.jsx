@@ -24,10 +24,8 @@ export default function Playground() {
             transition={{ duration: 0.4, delay: index * 0.06 }}
             className="group w-64 shrink-0"
           >
-            <div className="aspect-[4/3] overflow-hidden rounded-xl border border-border transition-colors group-hover:border-accent">
-              <div className="h-full w-full transition-transform duration-500 group-hover:scale-[1.04]">
-                <ProjectImage src={item.image} label={item.title} kind={item.tag} />
-              </div>
+            <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border transition-colors group-hover:border-accent">
+              <ProjectImage src={item.image} label={item.title} kind={item.tag} />
             </div>
             <p className="mt-3 font-mono text-[11px] uppercase tracking-widest text-text-muted">
               {item.tag}

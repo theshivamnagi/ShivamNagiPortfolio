@@ -30,6 +30,23 @@ export default function Footer() {
     }
   }
 
+  const handleBackToTop = () => {
+    if (typeof window.__portfolioScrollToTop === 'function') {
+      window.__portfolioScrollToTop()
+      return
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleSectionClick = (event, href) => {
+    event.preventDefault()
+
+    if (typeof window.__portfolioScrollToTarget === 'function') {
+      window.__portfolioScrollToTarget(href, 80)
+    }
+  }
+
   return (
     <footer id="contact" className="w-full bg-neutral-950 text-neutral-100">
       <div className="mx-auto w-full max-w-6xl px-6 py-12 sm:px-8 sm:py-14 lg:px-10">
@@ -47,16 +64,16 @@ export default function Footer() {
               Menu
             </p>
             <nav className="mt-5 flex flex-col gap-3 text-base text-neutral-200">
-              <a href="#hero" className="transition-colors hover:text-white">
+              <a href="#hero" onClick={(event) => handleSectionClick(event, '#hero')} className="transition-colors hover:text-white">
                 Home
               </a>
-              <a href="#work" className="transition-colors hover:text-white">
+              <a href="#work" onClick={(event) => handleSectionClick(event, '#work')} className="transition-colors hover:text-white">
                 Work
               </a>
-              <a href="#playground" className="transition-colors hover:text-white">
+              <a href="#playground" onClick={(event) => handleSectionClick(event, '#playground')} className="transition-colors hover:text-white">
                 Playground
               </a>
-              <a href="#about" className="transition-colors hover:text-white">
+              <a href="#about" onClick={(event) => handleSectionClick(event, '#about')} className="transition-colors hover:text-white">
                 About
               </a>
             </nav>
@@ -136,13 +153,14 @@ export default function Footer() {
             &copy;2026 Shivam Nagi &mdash; All rights reserved
           </p>
 
-          <a
-            href="#hero"
+          <button
+            type="button"
+            onClick={handleBackToTop}
             className="inline-flex items-center gap-2 self-start rounded-full border border-white/10 px-4 py-2 text-sm text-neutral-200 transition-colors hover:border-white/30 hover:text-white"
           >
             Back to top
             <ArrowUpRightIcon className="h-3.5 w-3.5 rotate-[-45deg]" />
-          </a>
+          </button>
         </div>
       </div>
 

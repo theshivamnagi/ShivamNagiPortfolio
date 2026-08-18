@@ -85,14 +85,12 @@ export default function FeaturedWork() {
             className="group w-[85vw] shrink-0 snap-start text-left sm:w-[440px]"
             aria-expanded={selected === index}
           >
-            <div className="aspect-[16/10] overflow-hidden rounded-xl border border-border transition-colors group-hover:border-accent">
-              <div className="h-full w-full transition-transform duration-500 group-hover:scale-[1.03]">
-                <ProjectImage
-                  src={study.image}
-                  label={study.title}
-                  kind={study.kind}
-                />
-              </div>
+            <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border transition-colors group-hover:border-accent">
+              <ProjectImage
+                src={study.image}
+                label={study.title}
+                kind={study.kind}
+              />
             </div>
 
             <div className="mt-4 flex items-start justify-between gap-4">

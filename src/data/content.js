@@ -1,5 +1,4 @@
-// EDIT ME: replace with your real Google Calendar appointment scheduling URL
-export const BOOKING_URL = 'https://calendar.google.com/calendar/appointments/PLACEHOLDER'
+export const BOOKING_URL = 'https://calendar.app.google/Rc5WhR7LEiLM31ns8'
 
 // EDIT ME: drop your resume PDF in /public and update this path
 export const RESUME_URL = `${import.meta.env.BASE_URL}resume.pdf`
@@ -60,9 +59,8 @@ export const CASE_STUDIES = [
   {
     tag: 'CASE STUDY',
     kind: 'Web App',
-    title: 'Creator Discovery Feature',
-    // EDIT ME: drop a screenshot in /public/work and set e.g. `${import.meta.env.BASE_URL}work/discovery.png`
-    image: null,
+    title: 'Katha Client Portal',
+    image: `${import.meta.env.BASE_URL}Thumbnails/katha-client-portal.png`,
     problem: 'Brands struggled to find relevant creators, driving drop-off before campaign creation.',
     outcome: '27% lift in search-to-campaign conversion',
     problemDetail:
@@ -75,8 +73,8 @@ export const CASE_STUDIES = [
   {
     tag: 'SHIPPED',
     kind: 'Mobile App',
-    title: 'Creator App Redesign',
-    image: null,
+    title: 'Ignite App',
+    image: `${import.meta.env.BASE_URL}Thumbnails/ignite-app.png`,
     problem: 'Legacy creator app had inconsistent flows that slowed onboarding and daily usage.',
     outcome: '8,500+ active users onboarded to the redesigned app',
     problemDetail:

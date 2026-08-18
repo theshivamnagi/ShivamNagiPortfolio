@@ -1,19 +1,35 @@
+import { motion } from 'framer-motion'
+
+const THUMBNAIL_TRANSITION = {
+  type: 'spring',
+  stiffness: 260,
+  damping: 24,
+}
+
 export default function ProjectImage({ src, label, kind, className = '' }) {
   if (src) {
     return (
-      <img
+      <motion.img
         src={src}
         alt={label}
         loading="lazy"
-        className={`h-full w-full object-cover ${className}`}
+        initial={{ scale: 1, filter: 'brightness(0.86)' }}
+        whileHover={{ scale: 1.06, filter: 'brightness(1)' }}
+        transition={THUMBNAIL_TRANSITION}
+        style={{ willChange: 'transform, filter' }}
+        className={`h-full w-full object-contain ${className}`}
       />
     )
   }
 
   return (
-    <div
-      className={`flex h-full w-full flex-col items-center justify-center bg-surface ${className}`}
-      aria-label={`${label} — screenshot placeholder`}
+    <motion.div
+      initial={{ scale: 1, filter: 'brightness(0.9)' }}
+      whileHover={{ scale: 1.03, filter: 'brightness(1)' }}
+      transition={THUMBNAIL_TRANSITION}
+      style={{ willChange: 'transform, filter' }}
+      className={`flex h-full w-full flex-col items-center justify-center bg-surface p-4 ${className}`}
+      aria-label={`${label} - screenshot placeholder`}
     >
       <svg
         width="34"
@@ -34,6 +50,6 @@ export default function ProjectImage({ src, label, kind, className = '' }) {
       <span className="mt-3 font-mono text-[10px] uppercase tracking-widest text-text-muted">
         {kind || 'Screenshot'}
       </span>
-    </div>
+    </motion.div>
   )
 }

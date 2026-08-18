@@ -44,6 +44,18 @@ export default function Header() {
   const lastScrollYRef = useRef(0)
   const tickingRef = useRef(false)
 
+  const scrollToSection = (href) => {
+    if (typeof window.__portfolioScrollToTarget === 'function') {
+      window.__portfolioScrollToTarget(href, 80)
+    }
+  }
+
+  const handleNavClick = (event, href) => {
+    event.preventDefault()
+    setIsMenuOpen(false)
+    scrollToSection(href)
+  }
+
   const handleMobileSocialClick = (event, href) => {
     event.preventDefault()
 
@@ -147,6 +159,7 @@ export default function Header() {
             <a
               href="#hero"
               aria-label={`${DISPLAY_NAME} home`}
+              onClick={(event) => handleNavClick(event, '#hero')}
               className="flex min-w-0 flex-1 items-center gap-2"
             >
               <span className="relative flex shrink-0 items-center justify-center overflow-visible pr-1">
@@ -191,6 +204,7 @@ export default function Header() {
                 <a
                   key={link.href}
                   href={link.href}
+                  onClick={(event) => handleNavClick(event, link.href)}
                   className="whitespace-nowrap rounded-full px-3 py-1.5 font-mono text-xs uppercase tracking-wide text-text-muted transition-colors hover:bg-surface hover:text-accent"
                 >
                   {link.label}
@@ -245,7 +259,7 @@ export default function Header() {
                       <a
                         key={link.href}
                         href={link.href}
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={(event) => handleNavClick(event, link.href)}
                         className="rounded-2xl border border-border bg-surface px-4 py-3 font-mono text-xs uppercase tracking-wide text-text-muted transition-colors hover:text-accent"
                       >
                         {link.label}

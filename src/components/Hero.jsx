@@ -25,6 +25,14 @@ const TITLE_INTERVAL_MS = 1800
 export default function Hero() {
   const [activeTitleIndex, setActiveTitleIndex] = useState(0)
 
+  const handleViewWorkClick = (event) => {
+    event.preventDefault()
+
+    if (typeof window.__portfolioScrollToTarget === 'function') {
+      window.__portfolioScrollToTarget('#work', 80)
+    }
+  }
+
   useEffect(() => {
     const intervalId = window.setInterval(() => {
       setActiveTitleIndex((current) => (current + 1) % TITLES.length)
@@ -51,9 +59,13 @@ export default function Hero() {
 
         <motion.h1
           variants={item}
-          className="mt-8 font-display text-6xl font-bold leading-[0.95] tracking-tight text-text-primary sm:text-7xl md:text-8xl"
+          className="mt-8 inline-flex flex-wrap items-end justify-center gap-2 font-display text-6xl font-bold leading-[0.95] tracking-tight text-text-primary sm:text-7xl md:text-8xl"
         >
-          Shivam Nagi
+          <span>Shivam Nagi</span>
+          <span
+            aria-hidden="true"
+            className="caret-blink inline-block h-[0.9em] w-[3px] translate-y-[-0.08em] rounded-full bg-current opacity-35"
+          />
         </motion.h1>
 
         <motion.div
@@ -101,6 +113,7 @@ export default function Hero() {
         >
           <a
             href="#work"
+            onClick={handleViewWorkClick}
             className="rounded-full border border-border px-6 py-3 text-sm font-medium text-text-primary transition-colors hover:border-accent hover:text-accent"
           >
             View Work
