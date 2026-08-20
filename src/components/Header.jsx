@@ -174,30 +174,33 @@ export default function Header() {
               </span>
             </a>
 
-            <button
-              type="button"
-              onClick={() => setIsMenuOpen((current) => !current)}
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isMenuOpen}
-              className="ml-auto inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:bg-surface md:hidden"
-            >
-              <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
-              <motion.span
-                className="relative block h-4 w-5"
-                animate={{ rotate: isMenuOpen ? 180 : 0 }}
-                transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            <div className="ml-auto flex shrink-0 items-center gap-2 md:hidden">
+              <ThemeToggle />
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen((current) => !current)}
+                aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={isMenuOpen}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:bg-surface"
               >
-                <span
-                  className={`absolute left-0 top-0 block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ease-out ${isMenuOpen ? 'translate-y-[7px] rotate-45' : ''}`}
-                />
-                <span
-                  className={`absolute left-0 top-[7px] block h-0.5 w-5 rounded-full bg-current transition-opacity duration-300 ease-out ${isMenuOpen ? 'opacity-0' : ''}`}
-                />
-                <span
-                  className={`absolute left-0 top-[14px] block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ease-out ${isMenuOpen ? 'translate-y-[-7px] -rotate-45' : ''}`}
-                />
-              </motion.span>
-            </button>
+                <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
+                <motion.span
+                  className="relative block h-4 w-5"
+                  animate={{ rotate: isMenuOpen ? 180 : 0 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                >
+                  <span
+                    className={`absolute left-0 top-0 block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ease-out ${isMenuOpen ? 'translate-y-[7px] rotate-45' : ''}`}
+                  />
+                  <span
+                    className={`absolute left-0 top-[7px] block h-0.5 w-5 rounded-full bg-current transition-opacity duration-300 ease-out ${isMenuOpen ? 'opacity-0' : ''}`}
+                  />
+                  <span
+                    className={`absolute left-0 top-[14px] block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ease-out ${isMenuOpen ? 'translate-y-[-7px] -rotate-45' : ''}`}
+                  />
+                </motion.span>
+              </button>
+            </div>
 
             <nav className="hidden items-center gap-1 md:flex">
               {NAV_LINKS.map((link) => (
@@ -281,8 +284,6 @@ export default function Header() {
                           <img src={link.icon} alt="" aria-hidden="true" className="h-full w-full p-2" />
                         </motion.a>
                     ))}
-
-                    <ThemeToggle variant="switch" />
                   </div>
                 </div>
               </motion.div>
