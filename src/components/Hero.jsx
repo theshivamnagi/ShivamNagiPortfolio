@@ -59,13 +59,15 @@ export default function Hero() {
 
         <motion.h1
           variants={item}
-          className="mt-8 inline-flex flex-wrap items-end justify-center gap-2 font-display text-6xl font-bold leading-[0.95] tracking-tight text-text-primary sm:text-7xl md:text-8xl"
+          className="mt-8 flex justify-center font-display text-6xl font-bold leading-[0.95] tracking-tight text-text-primary sm:text-7xl md:text-8xl"
         >
-          <span>Shivam Nagi</span>
-          <span
-            aria-hidden="true"
-            className="caret-blink inline-block h-[0.9em] w-[3px] translate-y-[-0.08em] rounded-full bg-current opacity-35"
-          />
+          <span className="inline-flex items-end gap-2 whitespace-nowrap">
+            <span>Shivam Nagi</span>
+            <span
+              aria-hidden="true"
+              className="caret-blink inline-block h-[0.9em] w-[3px] translate-y-[-0.08em] rounded-full bg-current opacity-35 shrink-0"
+            />
+          </span>
         </motion.h1>
 
         <motion.div

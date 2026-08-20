@@ -5,7 +5,6 @@ import { CONTACT, PHOTO_URL } from '../data/content'
 
 const LINKEDIN_ICON = `${import.meta.env.BASE_URL}linkedin-svgrepo-com.svg`
 const GMAIL_ICON = `${import.meta.env.BASE_URL}gmail-svgrepo-com.svg`
-const WHATSAPP_ICON = `${import.meta.env.BASE_URL}whatsapp-svgrepo-com.svg`
 
 const NAV_LINKS = [
   { href: '#work', label: 'Work' },
@@ -27,11 +26,6 @@ const SOCIAL_LINKS = [
     label: 'Send email',
     icon: GMAIL_ICON,
   },
-  {
-    href: 'https://wa.me/917814619411',
-    label: 'Open WhatsApp chat in a new tab',
-    icon: WHATSAPP_ICON,
-  },
 ]
 
 const DISPLAY_NAME = 'Shivam Nagi'
@@ -40,9 +34,38 @@ const MOBILE_ACTION_DELAY_MS = 140
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
+  const [copied, setCopied] = useState(false)
+  const [isLaunchingMail, setIsLaunchingMail] = useState(false)
   const headerRef = useRef(null)
+
   const lastScrollYRef = useRef(0)
   const tickingRef = useRef(false)
+
+  useEffect(() => {
+    if (!copied) return undefined
+
+    const timeoutId = window.setTimeout(() => setCopied(false), 1800)
+    return () => window.clearTimeout(timeoutId)
+  }, [copied])
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT.email)
+      setCopied(true)
+    } catch {
+      const textarea = document.createElement('textarea')
+      textarea.value = CONTACT.email
+      textarea.setAttribute('readonly', 'true')
+      textarea.style.position = 'absolute'
+      textarea.style.left = '-9999px'
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      setCopied(true)
+    }
+  }
+
 
   const scrollToSection = (href) => {
     if (typeof window.__portfolioScrollToTarget === 'function') {
@@ -59,17 +82,35 @@ export default function Header() {
   const handleMobileSocialClick = (event, href) => {
     event.preventDefault()
 
+    if (href.startsWith('mailto:')) {
+      handleCopyEmail()
+      setIsLaunchingMail(true)
+      setTimeout(() => {
+        setIsLaunchingMail(false)
+        setIsMenuOpen(false)
+        window.location.href = href
+      }, 1000)
+      return
+    }
+
     window.setTimeout(() => {
       setIsMenuOpen(false)
-
-      if (href.startsWith('mailto:')) {
-        window.location.href = href
-        return
-      }
-
       window.open(href, '_blank', 'noopener,noreferrer')
     }, MOBILE_ACTION_DELAY_MS)
   }
+
+  const handleDesktopSocialClick = (event, href) => {
+    if (href.startsWith('mailto:')) {
+      event.preventDefault()
+      handleCopyEmail()
+      setIsLaunchingMail(true)
+      setTimeout(() => {
+        setIsLaunchingMail(false)
+        window.location.href = href
+      }, 1000)
+    }
+  }
+
 
   useEffect(() => {
     if (!isMenuOpen) return undefined
@@ -145,9 +186,15 @@ export default function Header() {
       <motion.div
         className="fixed inset-x-0 top-4 z-50 flex justify-center px-4"
         animate={{
-          y: isVisible ? 0 : -128,
           opacity: isVisible ? 1 : 0,
-          scale: isVisible ? 1 : 0.985,
+          scale: isVisible ? 1 : 0.85,
+          filter: isVisible ? "blur(0px)" : "blur(8px)",
+        }}
+        transition={{
+          type: 'spring',
+          stiffness: 300,
+          damping: 24,
+          mass: 0.8
         }}
         style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
       >
@@ -228,20 +275,37 @@ export default function Header() {
                     target={link.href.startsWith('mailto:') ? undefined : '_blank'}
                     rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
                     aria-label={link.label}
+                    onClick={(event) => handleDesktopSocialClick(event, link.href)}
                     className="group inline-flex h-10 w-10 items-center justify-center rounded-lg border border-transparent bg-transparent transition-colors hover:border-border hover:bg-surface"
                     whileHover={{ scale: 1.1, rotate: index === 1 ? 6 : index === 2 ? -4 : -6, y: -1 }}
                     whileTap={{ scale: 0.96, rotate: 0 }}
                     transition={{ type: 'spring', stiffness: 420, damping: 22 }}
                   >
-                    <motion.img
-                      src={link.icon}
-                      alt=""
-                      aria-hidden="true"
-                      className="h-full w-full p-1"
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ type: 'spring', stiffness: 500, damping: 24 }}
-                    />
+                    {isLaunchingMail && link.href.startsWith('mailto:') ? (
+                      <motion.svg 
+                        className="h-5 w-5 text-text-primary" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24"
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                      >
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </motion.svg>
+                    ) : (
+
+                      <motion.img
+                        src={link.icon}
+                        alt=""
+                        aria-hidden="true"
+                        className="h-full w-full p-1"
+                        whileHover={{ scale: 1.08 }}
+                        transition={{ type: 'spring', stiffness: 500, damping: 24 }}
+                      />
+                    )}
                   </motion.a>
+
                 ))}
               </div>
             </div>
@@ -281,8 +345,24 @@ export default function Header() {
                         whileTap={{ scale: 0.92, rotate: index === 1 ? 4 : index === 2 ? -4 : -5 }}
                         transition={{ type: 'spring', stiffness: 520, damping: 24 }}
                         >
-                          <img src={link.icon} alt="" aria-hidden="true" className="h-full w-full p-2" />
+                          {isLaunchingMail && link.href.startsWith('mailto:') ? (
+                            <motion.svg 
+                              className="h-5 w-5 text-text-primary" 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              fill="none" 
+                              viewBox="0 0 24 24"
+                              animate={{ rotate: 360 }}
+                              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                            >
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </motion.svg>
+                          ) : (
+
+                            <img src={link.icon} alt="" aria-hidden="true" className="h-full w-full p-2" />
+                          )}
                         </motion.a>
+
                     ))}
                   </div>
                 </div>
@@ -291,6 +371,15 @@ export default function Header() {
           </AnimatePresence>
         </header>
       </motion.div>
+
+      <div
+        aria-live="polite"
+        className={`pointer-events-none fixed bottom-6 left-1/2 z-[120] -translate-x-1/2 rounded-full border border-white/10 bg-neutral-900 px-4 py-2 text-sm text-white shadow-[0_16px_40px_rgba(0,0,0,0.35)] transition-all duration-300 ${
+          copied ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+        }`}
+      >
+        Copied to clipboard
+      </div>
     </MotionConfig>
   )
 }
