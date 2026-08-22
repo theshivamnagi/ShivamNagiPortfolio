@@ -214,7 +214,7 @@ export default function Header() {
                 <span className="overflow-hidden rounded-full border border-border bg-surface block h-11 w-11">
                   <ProfileImage src={PHOTO_URL} alt={DISPLAY_NAME} />
                 </span>
-                <span className="absolute bottom-[2px] right-[3px] h-3.5 w-3.5 rounded-full border-2 border-bg bg-emerald-500 shadow-sm" />
+                <span className="absolute bottom-[2px] right-[3px] z-20 h-3.5 w-3.5 rounded-full border-2 border-bg bg-emerald-500 shadow-sm" />
               </span>
 
               <span className="max-w-[9rem] truncate font-display text-base font-bold tracking-tight text-text-primary sm:max-w-none sm:text-lg">
