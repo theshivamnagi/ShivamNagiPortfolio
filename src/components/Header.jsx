@@ -8,7 +8,7 @@ const GMAIL_ICON = `${import.meta.env.BASE_URL}gmail-svgrepo-com.svg`
 
 const NAV_LINKS = [
   { href: '#work', label: 'Work' },
-  { href: '#playground', label: 'Playground' },
+  // { href: '#playground', label: 'Playground' },
   { href: '#about', label: 'About' },
   { href: '#experience', label: 'Experience' },
   { href: '#skills', label: 'Skills' },

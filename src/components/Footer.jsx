@@ -100,9 +100,9 @@ export default function Footer() {
                 <a href="#work" onClick={(event) => handleSectionClick(event, '#work')} className="transition-colors hover:text-white">
                   Work
                 </a>
-                <a href="#playground" onClick={(event) => handleSectionClick(event, '#playground')} className="transition-colors hover:text-white">
+                {/* <a href="#playground" onClick={(event) => handleSectionClick(event, '#playground')} className="transition-colors hover:text-white">
                   Playground
-                </a>
+                </a> */}
                 <a href="#about" onClick={(event) => handleSectionClick(event, '#about')} className="transition-colors hover:text-white">
                   About
                 </a>
