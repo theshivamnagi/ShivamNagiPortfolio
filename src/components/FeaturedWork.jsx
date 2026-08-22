@@ -57,7 +57,7 @@ export default function FeaturedWork() {
       <div className="mx-auto mb-10 flex w-full max-w-6xl items-end justify-between px-6 sm:px-8">
         <div>
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-text-muted">
-            [ 01 ] Featured Work
+            Featured Work
           </p>
           <h2 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
             Selected projects

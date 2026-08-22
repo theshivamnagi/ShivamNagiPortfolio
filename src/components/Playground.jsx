@@ -7,7 +7,7 @@ export default function Playground() {
     <section id="playground" className="w-full py-24">
       <div className="mx-auto mb-10 w-full max-w-6xl px-6 sm:px-8">
         <p className="mb-3 font-mono text-xs uppercase tracking-widest text-text-muted">
-          [ 02 ] Playground
+          Playground
         </p>
         <h2 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
           Experiments & side projects

@@ -19,7 +19,7 @@ function App() {
         <main>
           <Hero />
           <FeaturedWork />
-          <Playground />
+          {/* <Playground /> */}
           <About />
           <ExperienceTimeline />
           <Skills />
