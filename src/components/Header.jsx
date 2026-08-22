@@ -2,6 +2,7 @@ import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import ThemeToggle from './ThemeToggle'
 import { CONTACT, PHOTO_URL } from '../data/content'
+import ProfileImage from './ProfileImage'
 
 const LINKEDIN_ICON = `${import.meta.env.BASE_URL}linkedin-svgrepo-com.svg`
 const GMAIL_ICON = `${import.meta.env.BASE_URL}gmail-svgrepo-com.svg`
@@ -210,8 +211,8 @@ export default function Header() {
               className="flex min-w-0 flex-1 items-center gap-2"
             >
               <span className="relative flex shrink-0 items-center justify-center overflow-visible pr-1">
-                <span className="overflow-hidden rounded-full border border-border bg-surface">
-                  <img src={PHOTO_URL} alt={DISPLAY_NAME} className="h-11 w-11 object-cover" />
+                <span className="overflow-hidden rounded-full border border-border bg-surface block h-11 w-11">
+                  <ProfileImage src={PHOTO_URL} alt={DISPLAY_NAME} />
                 </span>
                 <span className="absolute bottom-[2px] right-[3px] h-3.5 w-3.5 rounded-full border-2 border-bg bg-emerald-500 shadow-sm" />
               </span>

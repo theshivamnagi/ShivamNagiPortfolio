@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { PHOTO_URL, RESUME_URL } from '../data/content'
 import { ArrowDownIcon } from './icons'
+import ProfileImage from './ProfileImage'
 
 const container = {
   hidden: {},
@@ -49,11 +50,7 @@ export default function Hero() {
       <motion.div variants={container} initial="hidden" animate="visible">
         <motion.div variants={item} className="flex justify-center">
           <div className="h-24 w-24 overflow-hidden rounded-full border border-border sm:h-28 sm:w-28">
-            <img
-              src={PHOTO_URL}
-              alt="Shivam Nagi"
-              className="h-full w-full object-cover"
-            />
+            <ProfileImage src={PHOTO_URL} alt="Shivam Nagi" />
           </div>
         </motion.div>
 
