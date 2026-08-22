@@ -1,35 +1,8 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CASE_STUDIES } from '../data/content'
 import ProjectImage from './ProjectImage'
 import { ArrowUpRightIcon } from './icons'
-
-function ScrollButton({ dir, onClick }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={dir === 'left' ? 'Scroll left' : 'Scroll right'}
-      className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:border-accent hover:text-accent"
-    >
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-        style={{ transform: dir === 'left' ? 'rotate(180deg)' : 'none' }}
-      >
-        <path d="M5 12h14" />
-        <path d="m12 5 7 7-7 7" />
-      </svg>
-    </button>
-  )
-}
 
 function DetailRow({ label, text }) {
   return (
@@ -43,98 +16,93 @@ function DetailRow({ label, text }) {
 }
 
 export default function FeaturedWork() {
-  const trackRef = useRef(null)
   const [selected, setSelected] = useState(null)
 
-  const scrollBy = (amount) => {
-    trackRef.current?.scrollBy({ left: amount, behavior: 'smooth' })
-  }
-
-  const active = selected === null ? null : CASE_STUDIES[selected]
-
   return (
-    <section id="work" className="w-full py-24">
-      <div className="mx-auto mb-10 flex w-full max-w-6xl items-end justify-between px-6 sm:px-8">
-        <div>
-          <p className="mb-3 font-mono text-xs uppercase tracking-widest text-text-muted">
-            Featured Work
-          </p>
-          <h2 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
-            Selected projects
-          </h2>
-        </div>
-        <div className="hidden gap-3 sm:flex">
-          <ScrollButton dir="left" onClick={() => scrollBy(-420)} />
-          <ScrollButton dir="right" onClick={() => scrollBy(420)} />
-        </div>
+    <section id="work" className="relative w-full py-24 sm:py-32">
+      <div className="mx-auto mb-16 flex w-full max-w-4xl flex-col items-center justify-center px-6 text-center sm:px-8">
+        <p className="mb-3 font-mono text-xs uppercase tracking-widest text-text-muted">
+          Featured Work
+        </p>
+        <h2 className="font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
+          Selected projects
+        </h2>
       </div>
 
-      <div
-        ref={trackRef}
-        className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-pl-6 px-6 pb-4 sm:scroll-pl-8 sm:px-8"
-      >
-        {CASE_STUDIES.map((study, index) => (
-          <motion.button
-            key={study.title}
-            type="button"
-            onClick={() => setSelected(selected === index ? null : index)}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.45, delay: index * 0.08 }}
-            className="group w-[85vw] shrink-0 snap-start text-left sm:w-[440px]"
-            aria-expanded={selected === index}
-          >
-            <div className="aspect-[16/9] overflow-hidden rounded-xl border border-border transition-colors group-hover:border-accent">
-              <ProjectImage
-                src={study.image}
-                label={study.title}
-                kind={study.kind}
-              />
-            </div>
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-12 px-6 pb-24 sm:gap-20 sm:px-8">
+        {CASE_STUDIES.map((study, index) => {
+          const isSelected = selected === index
+          return (
+            <motion.div
+              key={study.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ duration: 0.5 }}
+              className="sticky flex flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-xl shadow-black/5"
+              style={{
+                top: `calc(4rem + ${index * 1.5}rem)`,
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setSelected(isSelected ? null : index)}
+                className="group flex flex-col text-left focus:outline-none"
+                aria-expanded={isSelected}
+              >
+                <div className="relative aspect-[16/9] w-full overflow-hidden sm:aspect-[21/9]">
+                  <ProjectImage
+                    src={study.image}
+                    label={study.title}
+                    kind={study.kind}
+                  />
+                  <div className="absolute inset-0 bg-black/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                </div>
 
-            <div className="mt-4 flex items-start justify-between gap-4">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-widest text-text-muted">
-                  {study.kind} · [{study.tag}]
-                </p>
-                <h3 className="mt-1.5 font-display text-2xl font-semibold text-text-primary">
-                  {study.title}
-                </h3>
-                <p className="mt-1 text-sm text-text-muted">{study.problem}</p>
-                <p className="mt-3 text-sm font-semibold text-text-primary">
-                  {study.outcome}
-                </p>
-              </div>
-              <span className="mt-1 shrink-0 text-text-muted transition-colors group-hover:text-accent">
-                <ArrowUpRightIcon />
-              </span>
-            </div>
-          </motion.button>
-        ))}
+                <div className="flex w-full flex-col justify-between gap-4 p-6 sm:flex-row sm:items-start sm:p-8">
+                  <div className="flex-1">
+                    <p className="font-mono text-[11px] uppercase tracking-widest text-text-muted">
+                      {study.kind} · [{study.tag}]
+                    </p>
+                    <h3 className="mt-2 font-display text-2xl font-bold text-text-primary sm:text-3xl">
+                      {study.title}
+                    </h3>
+                    <p className="mt-2 max-w-2xl text-base leading-relaxed text-text-muted sm:text-lg">
+                      {study.problem}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 items-center justify-between sm:flex-col sm:items-end sm:gap-6">
+                    <p className="text-sm font-semibold text-text-primary sm:text-right">
+                      {study.outcome}
+                    </p>
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-primary transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-white">
+                      <ArrowUpRightIcon />
+                    </span>
+                  </div>
+                </div>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {isSelected && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.35, ease: 'easeInOut' }}
+                  >
+                    <div className="grid grid-cols-1 gap-6 border-t border-border bg-bg p-6 sm:grid-cols-2 sm:p-8">
+                      <DetailRow label="Problem" text={study.problemDetail} />
+                      <DetailRow label="Role" text={study.role} />
+                      <DetailRow label="Process" text={study.process} />
+                      <DetailRow label="Outcome" text={study.outcomeDetail} />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          )
+        })}
       </div>
-
-      <AnimatePresence initial={false}>
-        {active && (
-          <motion.div
-            key={selected}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: 'easeInOut' }}
-            className="overflow-hidden"
-          >
-            <div className="mx-auto mt-6 w-full max-w-6xl px-6 sm:px-8">
-              <div className="grid grid-cols-1 gap-6 rounded-xl border border-border bg-surface p-6 sm:grid-cols-2 sm:p-8">
-                <DetailRow label="Problem" text={active.problemDetail} />
-                <DetailRow label="Role" text={active.role} />
-                <DetailRow label="Process" text={active.process} />
-                <DetailRow label="Outcome" text={active.outcomeDetail} />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   )
 }

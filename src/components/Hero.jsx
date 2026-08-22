@@ -63,17 +63,13 @@ export default function Hero() {
       <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-6 py-28 sm:px-8 md:grid-cols-2">
         {/* Left Column */}
         <motion.div variants={container} initial="hidden" animate="visible" className="order-2 flex flex-col items-start text-left md:order-1">
-          <motion.div variants={item} className="mb-6 flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 shadow-sm">
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
-            <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-muted">Available for 2026</span>
-          </motion.div>
 
           <motion.h1
             variants={item}
             className="font-display text-5xl font-bold leading-none tracking-tight text-text-primary sm:text-6xl md:text-6xl lg:text-7xl"
           >
             Hi,<span className="ml-2">I'm</span> <br />
-            <span className="text-accent">Shivam Nagi</span>
+            <span className="font-black text-accent">Shivam Nagi</span>
           </motion.h1>
 
           <motion.p
@@ -114,7 +110,7 @@ export default function Hero() {
           style={{ perspective: 1000 }}
         >
           {/* Glow Effect */}
-          <div className="absolute inset-0 z-0 m-auto h-[75%] w-[75%] rounded-full bg-accent opacity-20 blur-[80px]" />
+          <div className="absolute inset-0 z-0 m-auto h-[75%] w-[75%] rounded-full bg-accent opacity-30 blur-[80px]" />
           
           <motion.div 
             onMouseMove={handleMouseMove}
@@ -128,11 +124,11 @@ export default function Hero() {
       </div>
 
       {/* Scrolling Marquee Strip */}
-      <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden border-t border-border bg-surface/80 py-3 backdrop-blur">
+      <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden bg-text-primary py-3">
         <motion.div 
           animate={{ x: [0, '-50%'] }}
           transition={{ duration: 30, ease: 'linear', repeat: Infinity }}
-          className="flex w-max whitespace-nowrap font-mono text-xs font-bold uppercase tracking-widest text-text-muted"
+          className="flex w-max whitespace-nowrap font-mono text-xs font-bold uppercase tracking-widest text-bg"
         >
           {[...TITLES, ...TITLES].map((title, index) => (
             <div key={index} className="flex items-center gap-8 px-4">
