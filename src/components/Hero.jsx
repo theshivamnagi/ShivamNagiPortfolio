@@ -72,7 +72,7 @@ export default function Hero() {
             variants={item}
             className="font-display text-5xl font-bold leading-none tracking-tight text-text-primary sm:text-6xl md:text-6xl lg:text-7xl"
           >
-            Hi, I'm <br />
+            Hi,<span className="ml-2">I'm</span> <br />
             <span className="text-accent">Shivam Nagi</span>
           </motion.h1>
 
@@ -129,14 +129,18 @@ export default function Hero() {
 
       {/* Scrolling Marquee Strip */}
       <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden border-t border-border bg-surface/80 py-3 backdrop-blur">
-        <div className="animate-marquee whitespace-nowrap font-mono text-xs font-bold uppercase tracking-widest text-text-muted">
+        <motion.div 
+          animate={{ x: [0, '-50%'] }}
+          transition={{ duration: 30, ease: 'linear', repeat: Infinity }}
+          className="flex w-max whitespace-nowrap font-mono text-xs font-bold uppercase tracking-widest text-text-muted"
+        >
           {[...TITLES, ...TITLES].map((title, index) => (
             <div key={index} className="flex items-center gap-8 px-4">
               <span>{title}</span>
               <span className="text-accent">✳</span>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
